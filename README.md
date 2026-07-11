@@ -30,7 +30,7 @@
 > - Make up a system name and hope FUB accepts it.
 > - Borrow a partner's credentials.
 >
-> **Doing any of the above to access restricted endpoints may violate Follow Up Boss's Terms of Service and could get your FUB account suspended or banned, with no notice.** FUB's rate-limit + identification policy is documented at https://docs.followupboss.com/reference#identification.
+> **Doing any of the above to access restricted endpoints may violate Follow Up Boss's Terms of Service and could get your FUB account suspended or banned, with no notice.** FUB's rate-limit + identification policy is documented at https://docs.followupboss.com/reference#identification. To register your own system and receive a legitimate `X-System` name + key, follow FUB's guide: https://docs.followupboss.com/docs/start-here-brand-new-integration#registering-your-system-key.
 >
 > If you don't have your own legitimate registered-system credentials, **leave these env vars unset**. The MCP will throw a clear, actionable error on every restricted tool ("requires X-System + X-System-Key …") rather than silently bypassing the gate. The unrestricted 130+ tools all work fine on a regular FUB API key.
 >
@@ -474,9 +474,12 @@ Once connected, just talk to your AI tool normally. Here are some things you can
 | `updateActionPlanPerson` | Update action plan status for a contact |
 
 ### Automations (6 tools)
+
+> **Automations 2.0 only, and registered-system only.** These tools target FUB's [Automations 2.0 API](https://docs.followupboss.com/reference/automations). They are **restricted to registered systems** — they require `FUB_SYSTEM` + `FUB_SYSTEM_KEY` (the `X-System` / `X-System-Key` headers), *and* the account must be on Automations 2.0. Without valid registered-system credentials every tool below returns a `403` ("You do not have access to this API endpoint"); the MCP surfaces a clear "requires X-System + X-System-Key …" error before the call is made. To register and get your own system key, see FUB's guide: https://docs.followupboss.com/docs/start-here-brand-new-integration#registering-your-system-key. See the **"READ BEFORE SETTING `FUB_SYSTEM` / `FUB_SYSTEM_KEY` — TOS RISK"** warning near the top of this README before setting these.
+
 | Tool | Description |
 |------|-------------|
-| `listAutomations` | List all automations |
+| `listAutomations` | List all Automations 2.0 automations |
 | `getAutomation` | Get an automation by ID |
 | `listAutomationsPeople` | List people in automations |
 | `getAutomationPerson` | Get automation-person entry |
