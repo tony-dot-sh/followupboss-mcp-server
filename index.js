@@ -2576,7 +2576,9 @@ export async function handleToolCall(name, rawArgs) {
     case 'listAutomations': {
       requireSystemCreds('listAutomations');
       const response = await fubApi.get('/automations', { params: args });
-      return { automations: response.data.automations, _metadata: response.data._metadata };
+      // FUB returns the collection under the key "automationsnew" (confirmed live 2026-07-11);
+      // tolerate the legacy "automations" key too.
+      return { automations: response.data.automationsnew || response.data.automations, _metadata: response.data._metadata };
     }
     case 'getAutomation': {
       requireSystemCreds('getAutomation');

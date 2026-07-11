@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.3.3 — 2026-07-11
+
+### Fixed (bug)
+
+- **`listAutomations` now returns the automations instead of `undefined`.** The Automations 2.0 `GET /automations` endpoint nests its collection under the key `automationsnew`, but the handler read `response.data.automations`, so the tool returned `{ automations: undefined }` even though `_metadata.total` reported results. The handler now reads `automationsnew` (falling back to `automations`). Confirmed against the live FUB API on 2026-07-11 using a registered system (`X-System` / `X-System-Key`); the four Automations 2.0 read endpoints all return 200 with headers and 403 without. `listAutomationsPeople` was already correct (its collection key is `automationsPeople`).
+
+### Compatibility
+
+Fully backward compatible. Tool schemas and env/transport unchanged. Note: the Automations 2.0 endpoints remain restricted to registered systems — set `FUB_SYSTEM` and `FUB_SYSTEM_KEY` for these tools to work.
+
 ## v1.3.2 — 2026-06-06
 
 ### Fixed (bug)
